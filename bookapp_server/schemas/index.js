@@ -2,6 +2,7 @@ const graphql = require("graphql");
 
 const { GraphQLObjectType, GraphQLString } = graphql;
 
+// create the type for book
 const BookType = new GraphQLObjectType({
   name: "Book",
   fields: () => ({
@@ -11,6 +12,9 @@ const BookType = new GraphQLObjectType({
   }),
 });
 
+//create the type for author
+
+//create the rootquery
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
