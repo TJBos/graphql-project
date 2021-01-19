@@ -22,7 +22,7 @@ const BookType = new GraphQLObjectType({
       type: AuthorType,
       resolve(parent, args) {
         //code to lookup author based on authorID in the books database collection
-        //honetsly don't think this part is necessary...play with it.
+        return Author.findById(parent.authorId);
       },
     },
   }),
@@ -39,6 +39,7 @@ const AuthorType = new GraphQLObjectType({
       type: new GraphQLList(BookType),
       resolve(parent, args) {
         //code to get list of books by author id (search in books collection)
+        return Book.find({ authorId: parent.id });
       },
     },
   }),
@@ -54,6 +55,7 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         //code to lookup book by id in the books db collection
+        return Book.findById(args.id);
       },
     },
     //query for an author by passing author id as an arg
@@ -62,13 +64,14 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         //code to lookup author by id in the authors db collection
+        return Author.findById(args.id);
       },
     },
     //query for a list of books
     books: {
       type: new GraphQLList(BookType),
       resolve(parent, args) {
-        //return list of all books
+        return Book.find({});
       },
     },
     //query for a list of authors
@@ -97,6 +100,22 @@ const Mutation = new GraphQLObjectType({
           age: args.age,
         });
         return author.save();
+      },
+    },
+    addBook: {
+      type: BookType,
+      args: {
+        name: { type: GraphQLString },
+        genre: { type: GraphQLString },
+        authorId: { type: GraphQLID },
+      },
+      resolve(parent, args) {
+        let book = new Book({
+          name: args.name,
+          genre: args.genre,
+          authorId: args.authorId,
+        });
+        return book.save();
       },
     },
   },
