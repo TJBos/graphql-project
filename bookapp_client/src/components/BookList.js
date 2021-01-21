@@ -13,6 +13,7 @@ const getBooksQuery = gql`
 
 const BookList = (props) => {
   const displayBooks = () => {
+    //console.log(data) => this is the object returned from graphql query
     let data = props.data;
     if (data.loading) {
       return <div>loading...</div>;
