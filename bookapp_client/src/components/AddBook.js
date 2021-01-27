@@ -39,7 +39,7 @@ const AddBook = (props) => {
           <option>Select Author</option>
           {displayAuthors()}
         </select>
-        <button type="submit">+</button>
+        <button type="submit">Add</button>
       </form>
     </div>
   );
